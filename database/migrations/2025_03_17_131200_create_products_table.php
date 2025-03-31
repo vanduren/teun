@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->integer('price');  // in cents
-            $table->foreignId('category_id')->constrained();
             $table->timestamps();
         });
     }

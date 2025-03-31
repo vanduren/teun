@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,3 +15,10 @@ Route::resource('products', ProductController::class);
 
 
 Route::resource('categories', CategoryController::class);
+
+Route::get('test', function () {
+    dd(Category::first()->products);
+})->name('test');
+
+
+Route::put('add-category/{product}', [ProductController::class, 'addCategory'])->name('add-category');

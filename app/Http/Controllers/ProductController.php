@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -55,7 +56,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('products.show', ['product' => $product]);
+        return view('products.show', [
+            'product' => $product,
+            'all_categories' => Category::all(),
+        ]);
     }
 
     /**
@@ -88,5 +92,15 @@ class ProductController extends Controller
     public function test()
     {
         return 'test';
+    }
+
+    public function addCategory(Request $request, Product $product)
+    {
+        $category = Category::find($request->category_id);
+        if ($category) {
+            $product->categories()->attach($category);
+            return redirect()->back()->with('success', 'Category added successfully');
+        }
+        return redirect()->back()->with('error', 'Category not found');
     }
 }
